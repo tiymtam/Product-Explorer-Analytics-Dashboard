@@ -12,3 +12,15 @@ console.log("Produk Murah:", cheapProducts);
 
 const priceList = products.map(product => `Rp ${product.price}`);
 console.log("Daftar Harga:", priceList);
+
+const container = document.getElementById("product-list");
+
+const htmlContent = products.map(product => {
+    return `<div class="card">
+        <h3>${product.title}</h3>
+        <span>Kategori: ${product.category}</span>
+        <p>Harga: Rp ${product.price}</p>
+    </div>`;
+}).join("");
+
+container.innerHTML = htmlContent;
