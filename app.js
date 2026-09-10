@@ -1,15 +1,14 @@
-const productName = "Laptop Asus ROG";
-let price = 15000000;
-let isAvailable = true;
+const products = [
+    { id: 1, title: "Laptop", price: 15000000, category: "elektronik" },
+    { id: 2, title: "Smartphone", price: 5000000, category: "elektronik" },
+    { id: 3, title: "Meja Kerja", price: 1200000, category: "perabotan" }
+];
 
-console.log("Nama Produk:", productName);
-console.log("Harga:", price);
+const productNames = products.map(product => product.title);
+console.log("Nama Produk:", productNames);
 
-let discount = 500000;
-let finalPrice = price - discount;
+const cheapProducts = products.filter(product => product.price < 10000000);
+console.log("Produk Murah:", cheapProducts);
 
-if (finalPrice > 10000000) {
-    console.log("Kategori: Barang Mewah");
-} else {
-    console.log("Kategori: Barang Standar");
-}
+const priceList = products.map(product => `Rp ${product.price}`);
+console.log("Daftar Harga:", priceList);
