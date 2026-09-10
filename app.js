@@ -115,3 +115,13 @@ const allRatingValues = products.reduce((acc, p) => {
     return acc.concat(ratingsOnly);
 }, []);
 console.log("7. Semua Nilai Rating (Datar):", allRatingValues);
+
+// 4
+
+// 4.1
+const allTagsFlat = products.flatMap(p => p.tags);
+console.log("Bagian 4 - Latihan 4.1 (Semua Tags):", allTagsFlat);
+
+// 4.2
+const allComments = products.flatMap(p => p.reviews.map(r => r.comment));
+console.log("Bagian 4 - Latihan 4.2 (Semua Comments):", allComments);
