@@ -14,13 +14,28 @@ const priceList = products.map(product => `Rp ${product.price}`);
 console.log("Daftar Harga:", priceList);
 
 const container = document.getElementById("product-list");
+const searchInput = document.getElementById("search-input");
 
-const htmlContent = products.map(product => {
-    return `<div class="card">
-        <h3>${product.title}</h3>
-        <span>Kategori: ${product.category}</span>
-        <p>Harga: Rp ${product.price}</p>
-    </div>`;
-}).join("");
+function renderProducts(dataToRender) {
+    const htmlContent = dataToRender.map(product => {
+        return `<div class="card">
+            <h3>${product.title}</h3>
+            <span>Kategori: ${product.category}</span>
+            <p>Harga: Rp ${product.price}</p>
+        </div>`;
+    }).join("");
+    
+    container.innerHTML = htmlContent;
+}
 
-container.innerHTML = htmlContent;
+renderProducts(products);
+
+searchInput.addEventListener("input", function (event) {
+    const keyword = event.target.value.toLowerCase();
+    
+    const filtered = products.filter(product => 
+        product.title.toLowerCase().includes(keyword)
+    );
+    
+    renderProducts(filtered);
+});
