@@ -47,6 +47,7 @@ function updateStock(productsData, id, newStock) {
 console.log("Bagian 2 - Produk Stok Sedikit:", lowStockProducts);
 
 // 3
+
 products = [
     {
         id: 1, title: "Laptop", price: 1200, rating: 4.5, stock: 10, category: "laptops",
@@ -69,15 +70,48 @@ products = [
     }
 ];
 
+// 3.1
+const allTagsNested = products.map(p => p.tags);
+console.log("1. Semua Tags (Nested):", allTagsNested);
+
+// 3.2
 function findProductsByTag(productsData, tag) {
     return productsData.filter(p => p.tags.includes(tag));
 }
+console.log("2. Cari Tag 'electronics':", findProductsByTag(products, "electronics"));
 
+// 3.3 
 const reviewCounts = products.map(p => ({
     id: p.id,
     title: p.title,
     totalReviews: p.reviews.length
 }));
+console.log("3. Jumlah Review per Produk:", reviewCounts);
 
-console.log("Bagian 3 - Produk dengan tag 'electronics':", findProductsByTag(products, "electronics"));
-console.log("Bagian 3 - Jumlah Review:", reviewCounts);
+// 3.4
+const fiveStarReviews = products.reduce((acc, p) => {
+    const fiveStars = p.reviews.filter(r => r.rating === 5);
+    return acc.concat(fiveStars);
+}, []);
+console.log("4. Review Bintang 5:", fiveStarReviews);
+
+// 3.5
+const manualAverageRatings = products.map(p => {
+    const totalRating = p.reviews.reduce((sum, r) => sum + r.rating, 0);
+    const avgRating = p.reviews.length > 0 ? (totalRating / p.reviews.length) : 0;
+    return { title: p.title, manualAvgRating: avgRating.toFixed(2) };
+});
+console.log("5. Rata-rata Rating Manual:", manualAverageRatings);
+
+// 3.6
+const mostReviewedProduct = products.reduce((prev, current) => {
+    return (prev.reviews.length > current.reviews.length) ? prev : current;
+});
+console.log("6. Produk Review Terbanyak:", mostReviewedProduct.title);
+
+// 3.7
+const allRatingValues = products.reduce((acc, p) => {
+    const ratingsOnly = p.reviews.map(r => r.rating);
+    return acc.concat(ratingsOnly);
+}, []);
+console.log("7. Semua Nilai Rating (Datar):", allRatingValues);
