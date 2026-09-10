@@ -1,41 +1,25 @@
-const products = [
-    { id: 1, title: "Laptop", price: 15000000, category: "elektronik" },
-    { id: 2, title: "Smartphone", price: 5000000, category: "elektronik" },
-    { id: 3, title: "Meja Kerja", price: 1200000, category: "perabotan" }
-];
-
-const productNames = products.map(product => product.title);
-console.log("Nama Produk:", productNames);
-
-const cheapProducts = products.filter(product => product.price < 10000000);
-console.log("Produk Murah:", cheapProducts);
-
-const priceList = products.map(product => `Rp ${product.price}`);
-console.log("Daftar Harga:", priceList);
-
-const container = document.getElementById("product-list");
-const searchInput = document.getElementById("search-input");
-
-function renderProducts(dataToRender) {
-    const htmlContent = dataToRender.map(product => {
-        return `<div class="card">
-            <h3>${product.title}</h3>
-            <span>Kategori: ${product.category}</span>
-            <p>Harga: Rp ${product.price}</p>
-        </div>`;
-    }).join("");
-    
-    container.innerHTML = htmlContent;
+// 1 
+// 1.1
+function calculateDiscountedPrice(price, discountPercent) {
+    return price - (price * discountPercent) / 100;
 }
 
-renderProducts(products);
+// 1.2
+const cart = [
+    { title: "Laptop", price: 1000, discountPercent: 10 },
+    { title: "Mouse", price: 20, discountPercent: 5 },
+    { title: "Keyboard", price: 50, discountPercent: 0 }
+];
 
-searchInput.addEventListener("input", function (event) {
-    const keyword = event.target.value.toLowerCase();
-    
-    const filtered = products.filter(product => 
-        product.title.toLowerCase().includes(keyword)
-    );
-    
-    renderProducts(filtered);
-});
+function applyDiscounts(cartData) {
+    const result = [];
+    for (const item of cartData) {
+        result.push({
+            title: item.title,
+            finalPrice: calculateDiscountedPrice(item.price, item.discountPercent)
+        });
+    }
+    return result;
+}
+
+console.log("Hasil Diskon:", applyDiscounts(cart));
