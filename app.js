@@ -45,6 +45,8 @@ function updateStock(productsData, id, newStock) {
 }
 
 console.log("Bagian 2 - Produk Stok Sedikit:", lowStockProducts);
+console.log("Bagian 2 - Cari ID 2:", findProductById(products, 2));
+console.log("Bagian 2 - Update Stock ID 1:", updateStock(products, 1, 50));
 
 // 3
 
