@@ -254,3 +254,26 @@ function sortProducts(productsData, sortBy) {
     });
 }
 console.log("8.2 Sort Products By Rating:", sortProducts(products, "rating").map(p => p.title));
+
+// 9
+//  9.1
+function groupByCategory(productsData) {
+    return productsData.reduce((groups, product) => {
+        const key = product.category;
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(product);
+        return groups;
+    }, {});
+}
+const groupedProducts = groupByCategory(products);
+console.log("9.1 Group by Category:", groupedProducts);
+
+// 9.2 
+const categorySummary = Object.keys(groupedProducts).map(category => {
+    return {
+        Kategori: category,
+        "Total Produk": groupedProducts[category].length
+    };
+});
+console.log("9.2 Ringkasan Kategori (Tabel):");
+console.table(categorySummary);
