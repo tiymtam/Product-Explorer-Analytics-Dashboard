@@ -127,3 +127,157 @@ console.log("Bagian 4 - Latihan 4.1 (Semua Tags):", allTagsFlat);
 // 4.2
 const allComments = products.flatMap(p => p.reviews.map(r => r.comment));
 console.log("Bagian 4 - Latihan 4.2 (Semua Comments):", allComments);
+
+// 5
+const titles = products.map(p => p.title);
+const expensiveProducts = products.filter(p => p.price > 500);
+const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
+
+console.log("5. Contoh Titles:", titles);
+console.log("5. Contoh Expensive Products:", expensiveProducts);
+console.log("5. Contoh Total Stock:", totalStock);
+
+// 5.1
+const laptopPrices = products
+    .filter(p => p.category === "laptops")
+    .map(p => p.price);
+const avgLaptopPrice = laptopPrices.reduce((a, b) => a + b, 0) / laptopPrices.length;
+console.log("5.1 Rata-rata Harga Laptop:", avgLaptopPrice);
+
+// 5.2
+function getStatistics(productsData) {
+    if (productsData.length === 0) return null;
+    const totalProducts = productsData.length;
+    const totalStockCount = productsData.reduce((sum, p) => sum + p.stock, 0);
+    const averagePrice = productsData.reduce((sum, p) => sum + p.price, 0) / totalProducts;
+    
+    const highestPrice = Math.max(...productsData.map(p => p.price));
+    const lowestPrice = Math.min(...productsData.map(p => p.price));
+    
+    const averageRating = productsData.reduce((sum, p) => sum + p.rating, 0) / totalProducts;
+
+    return {
+        totalProducts,
+        averagePrice: averagePrice.toFixed(2),
+        highestPrice,
+        lowestPrice,
+        totalStock: totalStockCount,
+        averageRating: averageRating.toFixed(2)
+    };
+}
+console.log("5.2 Statistik Produk:", getStatistics(products));
+
+
+// 6
+// 6.1
+function linearSearch(array, target) {
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === target) return i;
+    }
+    return -1;
+}
+console.log("6.1 Linear Search (Cari 5):", linearSearch([1, 3, 5, 7], 5));
+
+// 6.2
+function linearSearchById(productsData, targetId) {
+    for (let i = 0; i < productsData.length; i++) {
+        if (productsData[i].id === targetId) return i;
+    }
+    return -1;
+}
+console.log("6.2 Linear Search ID 2 (Index ke-):", linearSearchById(products, 2));
+
+
+// 7
+// 7.1
+function binarySearch(arr, target) {
+    let left = 0;
+    let right = arr.length - 1;
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        if (arr[mid] === target) return mid;
+        if (arr[mid] < target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}
+console.log("7.1 Binary Search (Cari 7):", binarySearch([1, 3, 5, 7, 9], 7));
+
+// 7.2
+const sortedProductsByPrice = [...products].sort((a, b) => a.price - b.price);
+
+function binarySearchByPrice(sortedProducts, targetPrice) {
+    let left = 0;
+    let right = sortedProducts.length - 1;
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        if (sortedProducts[mid].price === targetPrice) return mid;
+        if (sortedProducts[mid].price < targetPrice) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}
+console.log("7.2 Binary Search Harga 1200 (Index ke-):", binarySearchByPrice(sortedProductsByPrice, 1200));
+
+
+// 8
+
+const numbers = [5, 3, 8, 1];
+const ascendingNumbers = [...numbers].sort((a, b) => a - b);
+const descendingNumbers = [...numbers].sort((a, b) => b - a);
+const customSortedProducts = [...products].sort((a, b) => a.price - b.price);
+
+console.log("8. Contoh Ascending Numbers:", ascendingNumbers);
+console.log("8. Contoh Descending Numbers:", descendingNumbers);
+console.log("8. Contoh Custom Sorted Products (Harga Asc):", customSortedProducts.map(p => p.title));
+
+// 8.1
+function bubbleSort(numbersData) {
+    const arr = [...numbersData];
+    for (let i = 0; i < arr.length - 1; i++) {
+        for (let j = 0; j < arr.length - 1 - i; j++) {
+            if (arr[j] > arr[j + 1]) {
+                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+            }
+        }
+    }
+    return arr;
+}
+console.log("8.1 Bubble Sort Manual:", bubbleSort(numbers));
+
+// 8.2
+function sortProducts(productsData, sortBy) {
+    const arr = [...productsData];
+    return arr.sort((a, b) => {
+        if (sortBy === "price-asc") return a.price - b.price;
+        if (sortBy === "price-desc") return b.price - a.price;
+        if (sortBy === "rating") return b.rating - a.rating; // Rating tinggi ke rendah
+        if (sortBy === "title") return a.title.localeCompare(b.title);
+        return 0;
+    });
+}
+console.log("8.2 Sort Products By Rating:", sortProducts(products, "rating").map(p => p.title));
+
+
+// 9
+//  9.1
+function groupByCategory(productsData) {
+    return productsData.reduce((groups, product) => {
+        const key = product.category;
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(product);
+        return groups;
+    }, {});
+}
+const groupedProducts = groupByCategory(products);
+console.log("9.1 Group by Category:", groupedProducts);
+
+// 9.2 
+const categorySummary = Object.keys(groupedProducts).map(category => {
+    return {
+        Kategori: category,
+        "Total Produk": groupedProducts[category].length
+    };
+});
+console.log("9.2 Ringkasan Kategori (Tabel):");
+console.table(categorySummary);
