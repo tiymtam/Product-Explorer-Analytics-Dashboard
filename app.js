@@ -277,3 +277,27 @@ const categorySummary = Object.keys(groupedProducts).map(category => {
 });
 console.log("9.2 Ringkasan Kategori (Tabel):");
 console.table(categorySummary);
+
+// 10
+const words = ["laptop", "phone", "laptop", "tablet", "phone", "laptop"];
+
+// 10.1
+function countFrequency(array) {
+    return array.reduce((counts, item) => {
+        counts[item] = (counts[item] || 0) + 1;
+        return counts;
+    }, {});
+}
+console.log("10.1 Count Words:", countFrequency(words));
+
+// 10.2
+const categoryFrequency = countFrequency(products.map(p => p.category));
+const allTagsForFreq = products.flatMap(p => p.tags);
+const tagFrequency = countFrequency(allTagsForFreq);
+const ratingFrequency = countFrequency(products.map(p => Math.round(p.rating)));
+const brandFrequency = countFrequency(products.map(p => p.brand || "Unknown"));
+
+console.log("10.2 Freq Category:", categoryFrequency);
+console.log("10.2 Freq Tags:", tagFrequency);
+console.log("10.2 Freq Rating:", ratingFrequency);
+console.log("10.2 Freq Brand:", brandFrequency);
