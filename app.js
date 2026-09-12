@@ -359,3 +359,24 @@ searchHistory.push("laptop");
 searchHistory.push("phone");
 searchHistory.push("tablet");
 console.log("13.2 Undo Search:", searchHistory.pop(), "| Current History:", searchHistory.items);
+
+// 14
+// 14.1
+class Queue {
+    constructor() {
+        this.items = [];
+    }
+    enqueue(item) {
+        this.items.push(item);
+    }
+    dequeue() {
+        return this.items.shift();
+    }
+    peek() {
+        return this.items[0];
+    }
+}
+const requestQueue = new Queue();
+requestQueue.enqueue("req1");
+requestQueue.enqueue("req2");
+console.log("14.1 Queue Dequeue:", requestQueue.dequeue(), "| Current Queue:", requestQueue.items);
