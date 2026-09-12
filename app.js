@@ -301,3 +301,16 @@ console.log("10.2 Freq Category:", categoryFrequency);
 console.log("10.2 Freq Tags:", tagFrequency);
 console.log("10.2 Freq Rating:", ratingFrequency);
 console.log("10.2 Freq Brand:", brandFrequency);
+
+// 11
+const categoriesSet = [...new Set(products.map(p => p.category))];
+console.log("11. Contoh Set Categories:", categoriesSet);
+
+// 11.1
+const uniqueCategory = [...new Set(products.map(p => p.category))];
+const uniqueBrand = [...new Set(products.map(p => p.brand).filter(Boolean))]; 
+const uniqueTags = [...new Set(products.flatMap(p => p.tags))];
+
+console.log("11.1 Unique Category:", uniqueCategory);
+console.log("11.1 Unique Brand:", uniqueBrand);
+console.log("11.1 Unique Tags:", uniqueTags);
