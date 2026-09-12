@@ -412,3 +412,65 @@ function printCategories(categoriesData, depth = 0) {
 }
 console.log("15.1 Print Categories:");
 printCategories(nestedCategories);
+
+// 16
+// 16.1
+const largeArray = Array.from({ length: 10000 }, (_, i) => i + 1);
+
+function linearSearchWithCount(array, target) {
+    let steps = 0;
+    for (let i = 0; i < array.length; i++) {
+        steps++;
+        if (array[i] === target) return steps;
+    }
+    return steps;
+}
+
+function binarySearchWithCount(arr, target) {
+    let steps = 0;
+    let left = 0;
+    let right = arr.length - 1;
+    while (left <= right) {
+        steps++;
+        const mid = Math.floor((left + right) / 2);
+        if (arr[mid] === target) return steps;
+        if (arr[mid] < target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return steps;
+}
+
+const targetNum = 9999;
+console.log(`16.1 Linear Search Steps (Target ${targetNum}):`, linearSearchWithCount(largeArray, targetNum));
+console.log(`16.1 Binary Search Steps (Target ${targetNum}):`, binarySearchWithCount(largeArray, targetNum));
+
+// 16.2
+const mockProducts = Array.from({ length: 1000 }, (_, i) => ({
+    id: i,
+    category: `cat-${i % 10}`
+}));
+
+function findPairsNestedLoop(productsData) {
+    let steps = 0;
+    for (let i = 0; i < productsData.length; i++) {
+        for (let j = i + 1; j < productsData.length; j++) {
+            steps++;
+        }
+    }
+    return steps;
+}
+
+function findPairsGrouping(productsData) {
+    let steps = 0;
+    const groups = {};
+    for (let i = 0; i < productsData.length; i++) {
+        steps++;
+        const cat = productsData[i].category;
+        if (!groups[cat]) groups[cat] = [];
+        groups[cat].push(productsData[i]);
+    }
+    return steps; // Count iterasi pembuatan grup
+}
+
+console.log("16.2 Nested Loop Steps (O(n^2)):", findPairsNestedLoop(mockProducts));
+console.log("16.2 Grouping Steps (O(n)):", findPairsGrouping(mockProducts));
