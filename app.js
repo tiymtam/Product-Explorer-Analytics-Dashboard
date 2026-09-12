@@ -380,3 +380,35 @@ const requestQueue = new Queue();
 requestQueue.enqueue("req1");
 requestQueue.enqueue("req2");
 console.log("14.1 Queue Dequeue:", requestQueue.dequeue(), "| Current Queue:", requestQueue.items);
+
+// 15
+function countdown(n) {
+    if (n <= 0) {
+        console.log("15. Contoh Selesai");
+        return;
+    }
+    countdown(n - 1);
+}
+countdown(3); 
+
+const nestedCategories = [
+    {
+        name: "Electronics",
+        children: [
+            { name: "Laptop", children: [] },
+            { name: "Phone", children: [] }
+        ]
+    }
+];
+
+// 15.1
+function printCategories(categoriesData, depth = 0) {
+    for (const category of categoriesData) {
+        console.log(" ".repeat(depth) + category.name);
+        if (category.children.length > 0) {
+            printCategories(category.children, depth + 1);
+        }
+    }
+}
+console.log("15.1 Print Categories:");
+printCategories(nestedCategories);
