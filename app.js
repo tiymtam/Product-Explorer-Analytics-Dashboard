@@ -314,3 +314,21 @@ const uniqueTags = [...new Set(products.flatMap(p => p.tags))];
 console.log("11.1 Unique Category:", uniqueCategory);
 console.log("11.1 Unique Brand:", uniqueBrand);
 console.log("11.1 Unique Tags:", uniqueTags);
+
+// 12
+const productMapExample = new Map();
+for (const product of products) {
+    productMapExample.set(product.id, product);
+}
+console.log("12. Contoh Map Get ID 1:", productMapExample.get(1));
+
+// 12.1
+function buildProductLookup(productsData) {
+    const productMap = new Map();
+    for (const product of productsData) {
+        productMap.set(product.id, product);
+    }
+    return productMap;
+}
+const productLookup = buildProductLookup(products);
+console.log("12.1 Product Lookup Get ID 2:", productLookup.get(2));
