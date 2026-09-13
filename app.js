@@ -494,3 +494,29 @@ function renderProductsDOM(productsToRender) {
     }
 }
 renderProductsDOM(products.slice(0, 5));
+
+// 18
+const state = {
+    products: products,
+    search: "",
+    category: "all",
+    sortBy: "default",
+    favorites: [],
+    status: "idle"
+};
+
+function render() {
+    let filtered = state.products.filter(p => 
+        p.title.toLowerCase().includes(state.search.toLowerCase())
+    );
+    
+    if (state.category !== "all") {
+        filtered = filtered.filter(p => p.category === state.category);
+    }
+    
+    if (state.sortBy === "price-asc") {
+        filtered.sort((a, b) => a.price - b.price);
+    }
+    
+    renderProductsDOM(filtered);
+}
