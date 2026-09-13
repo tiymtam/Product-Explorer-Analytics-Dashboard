@@ -469,8 +469,28 @@ function findPairsGrouping(productsData) {
         if (!groups[cat]) groups[cat] = [];
         groups[cat].push(productsData[i]);
     }
-    return steps; // Count iterasi pembuatan grup
+    return steps; 
 }
 
 console.log("16.2 Nested Loop Steps (O(n^2)):", findPairsNestedLoop(mockProducts));
 console.log("16.2 Grouping Steps (O(n)):", findPairsGrouping(mockProducts));
+
+// 17
+// 17.1
+function renderProductsDOM(productsToRender) {
+    const container = document.querySelector("#product-list");
+    if (!container) return; 
+    container.innerHTML = "";
+    for (const product of productsToRender) {
+        const card = document.createElement("div");
+        card.classList.add("product-card");
+        card.innerHTML = `
+            <h3>${product.title}</h3>
+            <p>${product.category}</p>
+            <p>Harga: $${product.price}</p>
+            <p>Rating: ${product.rating}</p>
+        `;
+        container.append(card);
+    }
+}
+renderProductsDOM(products.slice(0, 5));
