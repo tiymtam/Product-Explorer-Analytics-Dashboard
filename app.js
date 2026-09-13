@@ -567,3 +567,15 @@ const mockAlgorithmsModule = {
     groupByCategory: function() {}
 };
 console.log("21. ES Modules Orchestration Concept (main.js, api.js, ui.js, dll)");
+
+// 22
+const dummyPromise = new Promise((resolve, reject) => {
+    const success = true;
+    if (success) resolve("22. Data berhasil diambil");
+    else reject("Terjadi error");
+});
+
+dummyPromise
+    .then(result => console.log(result))
+    .catch(error => console.error(error))
+    .finally(() => console.log("22. Selesai, apa pun hasilnya"));
