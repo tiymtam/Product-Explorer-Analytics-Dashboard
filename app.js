@@ -520,3 +520,28 @@ function render() {
     
     renderProductsDOM(filtered);
 }
+
+// 19
+// 19.1
+const searchInputDOM = document.querySelector("#search-input");
+const categorySelectDOM = document.querySelector("#category-select");
+const sortSelectDOM = document.querySelector("#sort-select");
+
+if (searchInputDOM && categorySelectDOM && sortSelectDOM) {
+    searchInputDOM.addEventListener("input", (e) => {
+        state.search = e.target.value;
+        render();
+    });
+    
+    categorySelectDOM.addEventListener("change", (e) => {
+        state.category = e.target.value;
+        render();
+    });
+    
+    sortSelectDOM.addEventListener("change", (e) => {
+        state.sortBy = e.target.value;
+        render();
+    });
+    
+    render();
+}
