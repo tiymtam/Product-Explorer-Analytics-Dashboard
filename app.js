@@ -560,3 +560,10 @@ const getStatisticsES6 = (productsData) => {
     return { totalProducts, totalStock, averagePrice, highestPrice, lowestPrice, averageRating };
 };
 console.log("20.1 ES6 Stats:", getStatisticsES6(products));
+
+// 21
+const mockAlgorithmsModule = {
+    linearSearch: function() {},
+    groupByCategory: function() {}
+};
+console.log("21. ES Modules Orchestration Concept (main.js, api.js, ui.js, dll)");
