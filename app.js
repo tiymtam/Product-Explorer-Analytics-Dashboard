@@ -545,3 +545,18 @@ if (searchInputDOM && categorySelectDOM && sortSelectDOM) {
     
     render();
 }
+
+// 20
+// 20.1
+const getStatisticsES6 = (productsData) => {
+    if (!productsData?.length) return null;
+    const totalProducts = productsData.length;
+    const totalStock = productsData.reduce((sum, { stock = 0 }) => sum + stock, 0);
+    const averagePrice = productsData.reduce((sum, { price = 0 }) => sum + price, 0) / totalProducts;
+    const highestPrice = Math.max(...productsData.map(p => p.price));
+    const lowestPrice = Math.min(...productsData.map(p => p.price));
+    const averageRating = productsData.reduce((sum, { rating = 0 }) => sum + rating, 0) / totalProducts;
+
+    return { totalProducts, totalStock, averagePrice, highestPrice, lowestPrice, averageRating };
+};
+console.log("20.1 ES6 Stats:", getStatisticsES6(products));
