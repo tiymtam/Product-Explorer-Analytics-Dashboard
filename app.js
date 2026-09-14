@@ -477,6 +477,11 @@ console.log("16.2 Grouping Steps (O(n)):", findPairsGrouping(mockProducts));
 
 // 17
 // 17.1
+products.push(
+    { id: 3, title: "Headphones", price: 150, rating: 4.8, stock: 20, category: "audio" },
+    { id: 4, title: "Monitor", price: 300, rating: 4.6, stock: 8, category: "electronics" },
+    { id: 5, title: "Keyboard", price: 100, rating: 4.7, stock: 30, category: "electronics" }
+);
 function renderProductsDOM(productsToRender) {
     const container = document.querySelector("#product-list");
     if (!container) return; 
@@ -579,3 +584,24 @@ dummyPromise
     .then(result => console.log(result))
     .catch(error => console.error(error))
     .finally(() => console.log("22. Selesai, apa pun hasilnya"));
+
+// 23 & 24
+// 24.1
+async function fetchProducts() {
+    try {
+        state.status = "loading";
+        render(); 
+        
+        const response = await fetch("https://dummyjson.com/products?limit=30");
+        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+        
+        const data = await response.json();
+        state.products = data.products; 
+        state.status = "success";
+    } catch (error) {
+        state.status = "error";
+        console.error("Gagal mengambil data:", error);
+    } finally {
+        render(); 
+    }
+}
