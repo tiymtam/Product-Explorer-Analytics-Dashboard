@@ -605,3 +605,49 @@ async function fetchProducts() {
         render(); 
     }
 }
+
+// 25
+// 25.1
+function getFinalStatistics(productsData) {
+    if (!productsData || productsData.length === 0) return null;
+    const totalProducts = productsData.length;
+    const totalStock = productsData.reduce((sum, p) => sum + (p.stock || 0), 0);
+    const averagePrice = productsData.reduce((sum, p) => sum + p.price, 0) / totalProducts;
+    const highestPrice = Math.max(...productsData.map(p => p.price));
+    const lowestPrice = Math.min(...productsData.map(p => p.price));
+    const averageRating = productsData.reduce((sum, p) => sum + p.rating, 0) / totalProducts;
+    
+    return { totalProducts, averagePrice: averagePrice.toFixed(2), highestPrice, lowestPrice, totalStock, averageRating: averageRating.toFixed(2) };
+}
+
+// 25.2
+function getCategoryAnalytics(productsData) {
+    const grouped = productsData.reduce((acc, p) => {
+        if (!acc[p.category]) acc[p.category] = { count: 0, totalPrice: 0, totalRating: 0, totalStock: 0 };
+        acc[p.category].count += 1;
+        acc[p.category].totalPrice += p.price;
+        acc[p.category].totalRating += p.rating;
+        acc[p.category].totalStock += (p.stock || 0);
+        return acc;
+    }, {});
+    
+    return Object.keys(grouped).map(cat => ({
+        category: cat,
+        count: grouped[cat].count,
+        avgPrice: (grouped[cat].totalPrice / grouped[cat].count).toFixed(2),
+        avgRating: (grouped[cat].totalRating / grouped[cat].count).toFixed(2),
+        totalStock: grouped[cat].totalStock
+    }));
+}
+
+// 25.3
+function searchProducts(productsData, keyword, mode = "partial") {
+    if (!keyword) return productsData;
+    const lowerKw = keyword.toLowerCase();
+    
+    return productsData.filter(p => {
+        if (mode === "exact") return p.title === keyword;
+        if (mode === "case-insensitive") return p.title.toLowerCase() === lowerKw;
+        return p.title.toLowerCase().includes(lowerKw);
+    });
+}
