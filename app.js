@@ -651,3 +651,57 @@ function searchProducts(productsData, keyword, mode = "partial") {
         return p.title.toLowerCase().includes(lowerKw);
     });
 }
+
+// 26
+// 26.1
+function renderFinalApp() {
+    const container = document.querySelector("#product-list");
+    if (!container) return;
+    
+    if (state.status === "loading") {
+        container.innerHTML = "<p>Loading data dari API...</p>";
+        return;
+    }
+    
+    if (state.status === "error") {
+        container.innerHTML = "<p>Gagal memuat data. Periksa koneksi internet.</p>";
+        return;
+    }
+
+    let filtered = searchProducts(state.products, state.search, "partial");
+    
+    if (state.category !== "all") {
+        filtered = filtered.filter(p => p.category === state.category);
+    }
+    
+    if (state.sortBy === "price-asc") {
+        filtered.sort((a, b) => a.price - b.price);
+    } else if (state.sortBy === "price-desc") {
+        filtered.sort((a, b) => b.price - a.price);
+    } else if (state.sortBy === "rating") {
+        filtered.sort((a, b) => b.rating - a.rating);
+    } else if (state.sortBy === "title") {
+        filtered.sort((a, b) => a.title.localeCompare(b.title));
+    }
+
+    container.innerHTML = "";
+    for (const product of filtered) {
+        const card = document.createElement("div");
+        card.classList.add("product-card");
+        card.innerHTML = `
+            <h3>${product.title}</h3>
+            <p>Kategori: ${product.category}</p>
+            <p>Harga: $${product.price}</p>
+            <p>Rating: ${product.rating}</p>
+            <p>Stok: ${product.stock}</p>
+        `;
+        container.append(card);
+    }
+    
+    console.log("26.1 Final Statistics:", getFinalStatistics(filtered));
+    console.log("26.1 Category Analytics:", getCategoryAnalytics(filtered));
+}
+
+render = renderFinalApp;
+console.log("Memulai aplikasi (Fetching data dari DummyJSON)...");
+fetchProducts();
