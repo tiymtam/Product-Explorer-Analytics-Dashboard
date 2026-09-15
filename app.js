@@ -797,3 +797,75 @@ largeDataset.forEach(p => mapDB.set(p.id, p));
 randomTargets.forEach(id => mapDB.get(id));
 const endB = performance.now();
 console.log(`Performance B (Map): ${endB - startB} ms`);
+
+// Debugging Lab
+
+// Bug 1
+/*
+Error: Mereturn undefined/NaN.
+Penyebab: Kurang keyword return di dalam arrow function yang menggunakan curly braces.
+Penjelasan: Block scope butuh explicit return agar reduce bekerja.
+*/
+function getTotalStockFixed(productsData) {
+    return productsData.reduce((sum, p) => sum + p.stock, 0);
+}
+
+// Bug 2
+/*
+Error: Array berisi boolean (true/false), bukan objek produk.
+Penyebab: Menggunakan map() untuk menyeleksi kondisi.
+Penjelasan: map() untuk transformasi nilai, filter() untuk seleksi kondisi.
+*/
+const expensiveProductsFixed = products.filter(p => p.price > 500);
+
+// Bug 3
+/*
+Error: Array asli termutasi (side effect).
+Penyebab: .push() merubah array secara langsung.
+Penjelasan: State harus diupdate dengan immutability menggunakan spread operator.
+*/
+function addToFavoritesFixed(state, product) {
+    return { ...state, favorites: [...state.favorites, product] };
+}
+
+// Bug 4
+/*
+Error: Undefined atau "Cannot read properties of undefined".
+Penyebab: Typo nama property, tertulis "dimension" padahal "dimensions" (pakai s).
+Penjelasan: JavaScript strict terhadap penamaan key object.
+*/
+function getAverageDimensionFixed(product) {
+    return (product.dimensions?.width + product.dimensions?.height) / 2 || 0;
+}
+
+// Bug 5
+/*
+Error: Promise pending/Error data.json is not a function.
+Penyebab: Lupa memakai operator await pada fetch dan manipulasi json.
+Penjelasan: Async function butuh await untuk menunggu resolusi promise sebelum lanjut.
+*/
+async function loadProductsFixed() {
+    const response = await fetch("https://dummyjson.com/products");
+    return await response.json();
+}
+
+// Bug 6
+/*
+Error: Gagal memuat data / Syntax Error.
+Penyebab: Typo URL (productss) dan tidak ngecek apakah response.ok.
+Penjelasan: Fetch tidak me-reject error HTTP, jadi kita harus cek manual response.ok.
+*/
+async function getProductsFixed() {
+    const response = await fetch("https://dummyjson.com/products");
+    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    const data = await response.json();
+    return data.products;
+}
+
+// Bug 7
+/*
+Error: Function undefined saat dipanggil.
+Penyebab: Salah syntax import untuk Named Export.
+Penjelasan: Jika diexport tanpa 'default', import harus menggunakan destructuring (kurung kurawal).
+Perbaikan: import { linearSearch } from "./algorithms.js";
+*/
