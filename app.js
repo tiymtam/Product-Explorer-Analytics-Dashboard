@@ -774,3 +774,26 @@ function applyFilters(productsData, filters) {
     if (filters.minStock) result = result.filter(p => p.stock >= filters.minStock);
     return result;
 }
+
+// Advanced Challenge: Performance
+function generateLargeDataset(size) {
+    const dataset = [];
+    for (let i = 1; i <= size; i++) {
+        dataset.push({ id: i, title: `Product ${i}`, category: `category-${i % 20}`, price: Math.floor(Math.random() * 1000) });
+    }
+    return dataset;
+}
+const largeDataset = generateLargeDataset(10000);
+const randomTargets = Array.from({ length: 1000 }, () => Math.floor(Math.random() * 10000) + 1);
+
+const startA = performance.now();
+randomTargets.forEach(id => largeDataset.find(p => p.id === id));
+const endA = performance.now();
+console.log(`Performance A (find): ${endA - startA} ms`);
+
+const startB = performance.now();
+const mapDB = new Map();
+largeDataset.forEach(p => mapDB.set(p.id, p));
+randomTargets.forEach(id => mapDB.get(id));
+const endB = performance.now();
+console.log(`Performance B (Map): ${endB - startB} ms`);
