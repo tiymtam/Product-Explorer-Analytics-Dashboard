@@ -705,3 +705,55 @@ function renderFinalApp() {
 render = renderFinalApp;
 console.log("Memulai aplikasi (Fetching data dari DummyJSON)...");
 fetchProducts();
+
+// Algorithm Challenge
+// Challenge 1
+const top5Products = [...products].sort((a, b) => b.rating - a.rating).slice(0, 5);
+console.log("Challenge 1:", top5Products);
+
+// Challenge 2
+const catAvgPrices = Object.entries(
+    products.reduce((acc, p) => {
+        if (!acc[p.category]) acc[p.category] = { sum: 0, count: 0 };
+        acc[p.category].sum += p.price;
+        acc[p.category].count += 1;
+        return acc;
+    }, {})
+).map(([category, data]) => ({ category, avg: data.sum / data.count }));
+
+const mostExpensiveCategory = catAvgPrices.reduce((max, current) => current.avg > max.avg ? current : max, { avg: 0 });
+console.log("Challenge 2:", mostExpensiveCategory);
+
+// Challenge 3
+const tagCounts = products.flatMap(p => p.tags).reduce((acc, tag) => {
+    acc[tag] = (acc[tag] || 0) + 1;
+    return acc;
+}, {});
+const duplicateTags = Object.keys(tagCounts).filter(tag => tagCounts[tag] > 1);
+console.log("Challenge 3:", duplicateTags);
+
+// Challenge 4
+const catStocks = Object.entries(
+    products.reduce((acc, p) => {
+        acc[p.category] = (acc[p.category] || 0) + (p.stock || 0);
+        return acc;
+    }, {})
+).map(([category, stock]) => ({ category, stock }));
+
+const maxStockCategory = catStocks.reduce((max, current) => current.stock > max.stock ? current : max, { stock: 0 });
+console.log("Challenge 4:", maxStockCategory);
+
+// Challenge 5
+function searchRanking(productsData, keyword) {
+    const lowerKw = keyword.toLowerCase();
+    return [...productsData]
+        .filter(p => p.title.toLowerCase().includes(lowerKw))
+        .map(p => {
+            let score = 0;
+            if (p.title.toLowerCase() === lowerKw) score += 100;
+            score += p.rating;
+            return { ...p, score };
+        })
+        .sort((a, b) => b.score - a.score);
+}
+console.log("Challenge 5:", searchRanking(products, "phone"));
