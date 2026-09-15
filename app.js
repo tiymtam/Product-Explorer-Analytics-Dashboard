@@ -757,3 +757,20 @@ function searchRanking(productsData, keyword) {
         .sort((a, b) => b.score - a.score);
 }
 console.log("Challenge 5:", searchRanking(products, "phone"));
+
+// Advanced Challenge: Multi Filter
+function applyFilters(productsData, filters) {
+    let result = [...productsData];
+    if (filters.search) {
+        const kw = filters.search.toLowerCase();
+        result = result.filter(p => p.title.toLowerCase().includes(kw));
+    }
+    if (filters.category && filters.category !== "all") {
+        result = result.filter(p => p.category === filters.category);
+    }
+    if (filters.minPrice) result = result.filter(p => p.price >= filters.minPrice);
+    if (filters.maxPrice) result = result.filter(p => p.price <= filters.maxPrice);
+    if (filters.minRating) result = result.filter(p => p.rating >= filters.minRating);
+    if (filters.minStock) result = result.filter(p => p.stock >= filters.minStock);
+    return result;
+}
